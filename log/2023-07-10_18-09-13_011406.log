@@ -1,4 +1,0 @@
-__main__ DEBUG init_arg suc
-magic_assistant.cli DEBUG _magic_assistant_output suc, input:Nice to meet you, you can tell me what you want to do.
-magic_assistant.cli DEBUG _user_input suc, input:who are you
-magic_assistant.models.llm.fake_llm DEBUG parse suc, output:who are you
