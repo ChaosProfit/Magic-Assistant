@@ -1,0 +1,8 @@
+llm:
+    model_type: fake
+
+web:
+    port: 8080
+
+misc:
+    language_code: en
