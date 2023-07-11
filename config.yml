@@ -1,5 +1,8 @@
 llm:
-    model_type: fake
+  # model_type: transform_llm
+    model_type: vicuna
+      #    model_path: /opt/mojing/Models/public/chatglm2-6b
+    model_path: /opt/mojing/Models/public/vicuna-13b-v1.3
 
 web:
     port: 8080

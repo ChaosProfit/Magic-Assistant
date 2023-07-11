@@ -1,5 +1,5 @@
 """
-A dedicated helper to manage templates and prompt building.
+A dedicated helper to manage templates and prompt.py building.
 """
 
 import json
@@ -22,7 +22,7 @@ class Prompter(object):
             self.template = json.load(fp)
         if self._verbose:
             print(
-                f"Using prompt template {template_name}: {self.template['description']}"
+                f"Using prompt.py template {template_name}: {self.template['description']}"
             )
 
     def generate_prompt(
@@ -31,7 +31,7 @@ class Prompter(object):
         input: Union[None, str] = None,
         label: Union[None, str] = None,
     ) -> str:
-        # returns the full prompt from instruction and optional input
+        # returns the full prompt.py from instruction and optional input
         # if a label (=response, =output) is provided, it's also appended.
         if input:
             res = self.template["prompt_input"].format(

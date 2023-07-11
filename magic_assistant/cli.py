@@ -1,15 +1,16 @@
+# -*- coding: utf-8 -*-
 from loguru import logger
 from rich.console import Console
-from pydantic import BaseModel
 
+from magic_assistant.agent import Agent
 from magic_assistant.tips import get_tip
 from magic_assistant.models.llm.llm_factory import LlmFactory
 
 class Cli():
     def __init__(self, language_code: str, llm_factory: LlmFactory):
+        self._console: Console = Console()
         self.language_code: str = language_code
         self.llm_factory: LlmFactory = llm_factory
-        self._console: Console = Console()
 
     def start_loop(self):
         welcome_tip = get_tip(self.language_code, "welcome")
@@ -17,7 +18,11 @@ class Cli():
 
         while True:
             user_input = self._user_input()
-            self.llm_factory.predict(user_input)
+            agent = Agent(llm_factory=self.llm_factory, output_callback=self._magic_assistant_output)
+            agent.run(user_input)
+
+            # assistant_output = self.llm_factory.predict(user_input)
+            # self._magic_assistant_output(assistant_output)
 
     def _magic_assistant_output(self, output: str):
         role = "magic_assistant"

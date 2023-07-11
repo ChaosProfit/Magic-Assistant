@@ -1,6 +1,7 @@
 
 
-tips_en = {"welcome": "Nice to meet you, you can tell me what you want to do."
+tips_en = {"welcome": "Nice to meet you, you can tell me what you want to do.",
+           "exit": "bye bye"
            }
 
 tips = {"en": tips_en}

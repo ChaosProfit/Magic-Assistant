@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "magic-assistant"
+name = "magic_assistant"
 version = "0.1.0"
 description = ""
 authors = ["luguanglong <luguang_long@163.com>"]

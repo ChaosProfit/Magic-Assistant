@@ -1,4 +1,4 @@
 from pydantic import BaseModel
 
 class WebConfig(BaseModel):
-    port: str = ""
+    port: int = 0

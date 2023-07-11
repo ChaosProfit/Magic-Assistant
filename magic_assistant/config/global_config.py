@@ -1,3 +1,4 @@
+from loguru import logger
 import yaml
 from pydantic import BaseModel
 
@@ -10,12 +11,17 @@ class GlobalConfig(BaseModel):
     web_config: WebConfig = WebConfig()
     misc_config: MiscConfig = MiscConfig()
 
-    def parse(self, config_file_path: str="./config.yml"):
-        with open(config_file_path, 'r') as f:
-            file_content = f.read()
-            yaml_config_content = yaml.load(file_content, yaml.Loader)
-            self.llm_config.__dict__ = yaml_config_content["llm"]
-            self.web_config.__dict__ = yaml_config_content["web"]
-            self.misc_config.__dict__ = yaml_config_content["misc"]
+    def parse(self, config_file_path: str="./config.yml") -> int:
+        try:
+            with open(config_file_path, 'r') as f:
+                file_content = f.read()
+                yaml_config_content = yaml.load(file_content, yaml.Loader)
+                self.llm_config.__dict__ = yaml_config_content["llm"]
+                self.web_config.__dict__ = yaml_config_content["web"]
+                self.misc_config.__dict__ = yaml_config_content["misc"]
 
-            pass
+            logger.debug("parse config suc")
+            return 0
+        except Exception as e:
+            logger.error("parse config failed, catch exception:%s" % str(e))
+            return -1
