@@ -1,0 +1,28 @@
+version: '3'
+services:
+  postgre:
+    container_name: postgre
+    image: postgres:15.1
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-writer}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Abc123567.}
+      PGDATA: /data/postgres
+    volumes:
+      - ${ROOT_DATA_DIR_PATH}/postgres/data:/data/postgres
+      - ./postgresql/postgresql.conf:/data/postgres/postgresql.conf
+    ports:
+      - "5432:5432"
+    restart: ${RESTART_POLICY}
+
+  pgvector:
+    container_name: pgvector
+    image: ankane/pgvector:v0.4.1
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-writer}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Abc123567.}
+      PGDATA: /data/postgres
+    volumes:
+      - ${ROOT_DATA_DIR_PATH}/pgvector/data:/data/postgres
+    ports:
+      - "5433:5432"
+    restart: ${RESTART_POLICY}

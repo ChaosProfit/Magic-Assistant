@@ -1,1 +1,0 @@
-python3 -m magic_assistant.main cli

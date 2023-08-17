@@ -12,6 +12,9 @@ pyyaml = "^6.0"
 fastapi = "^0.100.0"
 uvicorn = "^0.22.0"
 llama-cpp-python = "^0.1.68"
+case-converter = "^1.1.0"
+sqlalchemy = "^2.0.19"
+pgvector = "^0.2.0"
 
 
 [build-system]
