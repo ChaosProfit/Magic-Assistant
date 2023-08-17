@@ -1,0 +1,30 @@
+model:
+    llm:
+      # supported model_types: fake, transform_llm, vicuna
+        model_type: fake
+        model_path: /opt/mojing/Models/public/vicuna-13b-v1.3
+
+    embedding:
+        text:
+            model_path: /opt/mojing/Models/public/all-mpnet-base-v2
+
+web:
+    port: 8080
+
+agent:
+    max_loop_count: 10
+    output_intermediate_steps: True
+    user_confirm_and_adjust: True
+    memory_size: 3
+
+misc:
+    language_code: en
+
+db:
+    postgre:
+        url: postgresql://writer:Abc123567.@127.0.0.1:5432/mojing
+
+vector:
+    type: pgvector
+    pgvector:
+        url: postgresql://writer:Abc123567.@127.0.0.1:5433/mojing

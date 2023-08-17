@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "magic_assistant"
+version = "0.1.0"
+description = ""
+authors = ["luguanglong <luguang_long@163.com>"]
+readme = "README.md"
+packages = [{include = "magic_assistant"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pyyaml = "^6.0"
+fastapi = "^0.100.0"
+uvicorn = "^0.22.0"
+llama-cpp-python = "^0.1.68"
+case-converter = "^1.1.0"
+sqlalchemy = "^2.0.19"
+pgvector = "^0.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
