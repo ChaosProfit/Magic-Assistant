@@ -9,7 +9,6 @@ services:
       PGDATA: /data/postgres
     volumes:
       - ${ROOT_DATA_DIR_PATH}/postgres/data:/data/postgres
-      - ./postgresql/postgresql.conf:/data/postgres/postgresql.conf
     ports:
       - "5432:5432"
     restart: ${RESTART_POLICY}

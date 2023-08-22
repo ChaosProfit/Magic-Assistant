@@ -1,7 +1,7 @@
 model:
     llm:
       # supported model_types: fake, transform_llm, vicuna
-        model_type: fake
+        model_type: vicuna
         model_path: /opt/mojing/Models/public/vicuna-13b-v1.3
 
     embedding:
@@ -14,7 +14,7 @@ web:
 agent:
     max_loop_count: 10
     output_intermediate_steps: True
-    user_confirm_and_adjust: True
+    user_confirm_and_adjust: False
     memory_size: 3
 
 misc:

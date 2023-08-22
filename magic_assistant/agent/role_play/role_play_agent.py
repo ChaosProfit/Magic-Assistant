@@ -9,24 +9,7 @@ from magic_assistant.agent.role_play.prompt import build_communicate_prompt, dec
 from magic_assistant.agent.role_play.agent_react import AgentReact
 from typing import Dict, Any
 from magic_assistant.io.base_io import BaseIo
-
-from magic_assistant.db.orm import BASE
-from sqlalchemy import Column, String
-
-
-class AgentMeta(BASE):
-    __tablename__ = "agent"
-
-    id = Column(String, primary_key=True)
-    name = Column(String)
-    sandbox_id = Column(String)
-    intro = Column(String)
-
-    def __init__(self):
-        self.id = uuid.uuid1().hex
-        self.name = ""
-        self.sandbox_id = ""
-        self.intro = ""
+from magic_assistant.agent.base_agent import AgentMeta
 
 
 class RolePlayAgent():

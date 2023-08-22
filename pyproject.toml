@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "magic_assistant"
-version = "0.1.0"
-description = ""
+version = "0.0.1"
+description = "An AI agent framework."
 authors = ["luguanglong <luguang_long@163.com>"]
 readme = "README.md"
 packages = [{include = "magic_assistant"}]
@@ -15,6 +15,16 @@ llama-cpp-python = "^0.1.68"
 case-converter = "^1.1.0"
 sqlalchemy = "^2.0.19"
 pgvector = "^0.2.0"
+loguru = "^0.7.0"
+transformers = "^4.31.0"
+sqlalchemy-utils = "^0.41.1"
+torch = "^2.0.1"
+nvidia-cublas-cu11 = "11.10.3.66"
+sentence-transformers = "^2.2.2"
+rich = "^13.5.2"
+accelerate = "^0.21.0"
+psycopg2 = "^2.9.7"
+websockets = "^11.0.3"
 
 
 [build-system]

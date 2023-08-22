@@ -8,6 +8,7 @@ from magic_assistant.memory.memory_item import MemoryItem
 from sqlalchemy.engine.base import Engine
 from sqlalchemy.orm import declarative_base, mapped_column
 from sqlalchemy import Column, String, BigInteger, Integer, text
+from sqlalchemy_utils import database_exists, create_database
 from pgvector.sqlalchemy import Vector
 
 Base = declarative_base()
@@ -43,6 +44,9 @@ class PgVectorAdapter():
         self._engine: Engine = None
 
     def init(self, config: PostgreConfig):
+        if database_exists(config.url) is False:
+            create_database(config.url)
+
         self._engine = create_engine(url=config.url)
         self.create_vector_extension()
         self.create_tables()

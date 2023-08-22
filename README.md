@@ -23,13 +23,14 @@ prepare the llm model in advance and configure the llm model path in the config/
 be integrated. If you want to use a llm which has not been integrated yet, you can integrate it yourself in the magic_assistant/model/llm
 directory.
 
-## metal
-1, Setup your own python environment, require python3.10+. For example, execute "conda create -n mojing python=3.10" in shell;
-2, Install python packages. In shell, cd to the directory of Magic-Assistant and execute " pip3 install -e .".
+## pip
+Execute "pip3 install magic_assistant" to install directly. Python is newer than 3.10. 
 ## docker
 The Magic-Assistant docker image has already installed the python dependencies and Magic-Assistant and starts up in restful_api mode.
 If you want to use it in cli mode, you can execute "docker exec -ti $docker_name /bin/bash" and execute "python3 -m magic_assistant.main $ args".
-
+## compile source
+1, Setup your own python environment, require python3.10+. For example, execute "conda create -n mojing python=3.10" in shell;
+2, Install python packages. In shell, cd to the directory of Magic-Assistant and execute " pip3 install -e .".
 
 # usage
 Magic-Assistant supports two usage types: cli and restful_api. If you want to use or test Magic-Assistant in shell, choose the

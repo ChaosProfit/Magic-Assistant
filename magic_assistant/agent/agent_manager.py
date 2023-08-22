@@ -5,12 +5,53 @@ from magic_assistant.agent.role_play.role_play_agent import RolePlayAgent, Agent
 from magic_assistant.utils.globals import Globals
 from magic_assistant.config.utils import get_yaml_content
 from magic_assistant.io.base_io import BaseIo
-
+from magic_assistant.agent.agent_factory import get_agent
+from magic_assistant.agent.base_agent import BaseAgent
 
 class AgentManager():
 
     def __init__(self, globals: Globals):
         self.globals: Globals = globals
+
+    def create_v2(self, agent_meta: AgentMeta) -> AgentMeta:
+        try:
+            with Session(self.globals.sql_orm.engine, expire_on_commit=False) as session:
+                session.add(agent_meta)
+                session.commit()
+        except Exception as e:
+            logger.exception(e)
+            return None
+
+        logger.debug("create_v2 suc, agent_meta:%s" % agent_meta.__dict__)
+        return agent_meta
+
+    def list(self) -> List[AgentMeta]:
+        with Session(self.globals.sql_orm.engine) as session:
+            agent_meta_list: List[AgentMeta] = session.query(AgentMeta).all()
+
+        logger.debug("list suc, agent_meta cnt:%d" % len(agent_meta_list))
+        return agent_meta_list
+
+    def delete_v2(self, agent_meta: AgentMeta) -> int:
+        with Session(self.globals.sql_orm.engine) as session:
+            session.query(AgentMeta).filter(AgentMeta.id == agent_meta.id).delete()
+            session.commit()
+
+        logger.debug("delete_by_id suc, id:%s" % id)
+        return 0
+
+    def get_by_id(self, id: str, io: BaseIo) -> BaseAgent:
+        with Session(self.globals.sql_orm.engine) as session:
+            agent_meta_list: List[AgentMeta] = session.query(AgentMeta).filter(AgentMeta.id==id).all()
+            if len(agent_meta_list) == 0:
+                logger.error("get_by_id failed")
+                return None
+
+            agent_meta: AgentMeta = agent_meta_list[0]
+            agent: BaseAgent = get_agent(agent_meta=agent_meta, globals=self.globals, io=io)
+
+            logger.debug("get_by_id suc")
+            return agent
 
     def create_batch(self, config_path: str, io: BaseIo, timestamp_callback: Callable) -> Dict[str, RolePlayAgent]:
         agent_dicts: [str, RolePlayAgent] = {}
@@ -41,6 +82,7 @@ class AgentManager():
 
         logger.debug("create suc, agent name:%s" % agent.meta.name)
         return agent
+
 
     def delete(self, agent_name: str):
         with Session(self.globals.sql_orm.engine) as session:

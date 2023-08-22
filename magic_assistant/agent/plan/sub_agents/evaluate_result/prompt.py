@@ -38,7 +38,7 @@ def decode_llm_output(output: str) -> bool:
     explanation_match = re.search("<explanation>([\w\W]+)</explanation>", output)
     result_match = re.search("<result>([\w\W]+)</result>", output)
     if explanation_match is None or result_match is None:
-        logger.error("decode_evaluate_result_output failed, explanation_match:%s, result_match:%s" % ())
+        logger.error("decode_evaluate_result_output failed, explanation_match:%s, result_match:%s" % (explanation_match, result_match))
         return False
 
     logger.debug("decode_evaluate_result_output suc, result:%s" % result_match.group(1))

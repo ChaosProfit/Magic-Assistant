@@ -1,3 +1,4 @@
+import json
 import re
 from loguru import logger
 from typing import List, Dict
@@ -35,3 +36,11 @@ def decode_llm_output_batch(llm_output: str, key_list: List[str]) -> Dict[str, s
             result[key] = match.group(1)
 
     return result
+
+def get_http_rsp(code=0, msg="suc", data={}):
+    """
+    getHttpRsp
+    """
+    rsp = {"code": code, "data": data, "msg": msg}
+    return rsp
+    # return json.dumps(rsp, ensure_ascii=False)
