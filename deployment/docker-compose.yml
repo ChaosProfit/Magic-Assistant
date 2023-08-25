@@ -25,3 +25,20 @@ services:
     ports:
       - "5433:5432"
     restart: ${RESTART_POLICY}
+
+  magic-assistant:
+    container_name: magic-assistant
+    image: mojingsmart/magic-assistant:${MAGIC_ASSISTANT_VERSION}
+    runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=0
+    volumes:
+      - ../config/magic_assistant.yml:/config/magic_assistant.yml
+      - ${LLM_MODEL_PATH}:/opt/magic_assistant/models/public/llm_model
+      - ${TEXT_EMBEDDING_MODEL_PATH}:/opt/magic_assistant/models/public/text_embedding_model
+    ports:
+      - "${MAGIC_ASSISTANT_PORT}:8080"
+#    depends_on:
+#      - postgre
+#      - pgvector
+    restart: ${RESTART_POLICY}

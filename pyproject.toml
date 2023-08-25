@@ -4,7 +4,6 @@ version = "0.0.1"
 description = "An AI agent framework."
 authors = ["luguanglong <luguang_long@163.com>"]
 readme = "README.md"
-packages = [{include = "magic_assistant"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -25,8 +24,16 @@ rich = "^13.5.2"
 accelerate = "^0.21.0"
 psycopg2 = "^2.9.7"
 websockets = "^11.0.3"
+mkdocs = "^1.5.2"
+mkdocs-material = "^9.2.3"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+#设置poetry包管理工具的自定义pypi镜像源配置
+[[tool.poetry.source]]
+name = "tsinghua"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+default = true

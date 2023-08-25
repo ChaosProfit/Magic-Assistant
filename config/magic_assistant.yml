@@ -2,11 +2,11 @@ model:
     llm:
       # supported model_types: fake, transform_llm, vicuna
         model_type: vicuna
-        model_path: /opt/mojing/Models/public/vicuna-13b-v1.3
+        model_path: /opt/magic_assistant/models/public/llm_model
 
     embedding:
         text:
-            model_path: /opt/mojing/Models/public/all-mpnet-base-v2
+            model_path: /opt/magic_assistant/models/public/text_embedding_model
 
 web:
     port: 8080
@@ -22,9 +22,9 @@ misc:
 
 db:
     postgre:
-        url: postgresql://writer:Abc123567.@127.0.0.1:5432/mojing
+        url: postgresql://writer:Abc123567.@192.168.1.7:5432/mojing
 
 vector:
     type: pgvector
     pgvector:
-        url: postgresql://writer:Abc123567.@127.0.0.1:5433/mojing
+        url: postgresql://writer:Abc123567.@192.168.1.7:5433/mojing
