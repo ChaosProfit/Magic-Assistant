@@ -1,0 +1,1 @@
+python3 -m fastchat.data.split_long_conversation --max-length 4096 --in $1 --out $2 --model-name $3

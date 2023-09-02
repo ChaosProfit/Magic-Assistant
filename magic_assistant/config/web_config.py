@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from magic_assistant.config.base_config import BaseConfig
 
-class WebConfig(BaseModel):
+class WebConfig(BaseConfig):
     port: int = 0

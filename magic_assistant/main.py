@@ -5,9 +5,11 @@ import uvicorn
 
 from magic_assistant.utils.utils import init_log
 from magic_assistant.utils.globals import GLOBALS
-from magic_assistant.web.web import app
+from fastapi import FastAPI
 from magic_assistant.cli import Cli
+from magic_assistant.db.orm_init import *
 
+app = FastAPI()
 
 def exit_func(signal_received, frame):
     print(GLOBALS.tips.get_tips().EXIT.value)
@@ -26,22 +28,22 @@ def init_arg():
     logger.debug("init_arg suc")
     return args
 
-def get_init_model_flag(args) -> bool:
+def get_init_models(args) -> bool:
     if args.io_type == "restful_api":
-        return True
+        return []
 
     if args.io_type == "cli" and args.agent == "run" :
-        return True
+        return []
 
-    return False
+    return [None]
 
 if __name__ == '__main__':
     signal(SIGINT, exit_func)
     init_log()
     args = init_arg()
-    init_model_flag = get_init_model_flag(args=args)
+    init_models = get_init_models(args=args)
 
-    ret = GLOBALS.init(init_model=init_model_flag)
+    ret = GLOBALS.init(init_models=init_models)
     if ret != 0:
         logger.error("init globals failed")
         exit(-1)
@@ -52,6 +54,11 @@ if __name__ == '__main__':
             cli.process_args(args)
             # cli.run(agent_type=args.agent_type, config_path=args.role_play_config)
         case "restful_api":
+            from magic_assistant.web.data_router import data_router
+            from magic_assistant.web.agent_router import agent_router
+            app.include_router(data_router)
+            app.include_router(agent_router)
+
             uvicorn.run(app, port=GLOBALS.config.web_config.port)
         case _:
             logger.error("unsupported io_type: %s" % args.mode)

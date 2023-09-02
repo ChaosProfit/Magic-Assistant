@@ -12,7 +12,7 @@ class EvaluateResultAgent(BaseAgent):
     def init(self) -> int:
         return 0
 
-    async def run(self, user_object: str, plan_item: str, action: Action, plan: Plan) -> int:
+    def run(self, user_object: str, plan_item: str, action: Action, plan: Plan) -> int:
         prompt = build_prompt(user_object, plan_item, action)
         llm_output = self.globals.llm_factory.run(prompt)
         is_plan_completed: bool = decode_llm_output(llm_output)
@@ -22,6 +22,6 @@ class EvaluateResultAgent(BaseAgent):
             plan.fail_the_executing_item()
             logger.error("One plan item is failed")
 
-        await self.output_intermediate_steps(
+        self.output_intermediate_steps(
             "%s:%s" % (self.globals.tips.get_tips().IF_THE_PLAN_ITEM_HAS_COMPLETED_SUC.value, is_plan_completed))
 

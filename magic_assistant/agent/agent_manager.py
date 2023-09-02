@@ -40,19 +40,6 @@ class AgentManager():
         logger.debug("delete_by_id suc, id:%s" % id)
         return 0
 
-    def get_by_id(self, id: str, io: BaseIo) -> BaseAgent:
-        with Session(self.globals.sql_orm.engine) as session:
-            agent_meta_list: List[AgentMeta] = session.query(AgentMeta).filter(AgentMeta.id==id).all()
-            if len(agent_meta_list) == 0:
-                logger.error("get_by_id failed")
-                return None
-
-            agent_meta: AgentMeta = agent_meta_list[0]
-            agent: BaseAgent = get_agent(agent_meta=agent_meta, globals=self.globals, io=io)
-
-            logger.debug("get_by_id suc")
-            return agent
-
     def create_batch(self, config_path: str, io: BaseIo, timestamp_callback: Callable) -> Dict[str, RolePlayAgent]:
         agent_dicts: [str, RolePlayAgent] = {}
         yaml_content = get_yaml_content(config_path)
@@ -91,6 +78,19 @@ class AgentManager():
 
         logger.debug("delete suc, agent_name:%s" % agent_name)
 
+    def get_by_id(self, id: str, io: BaseIo) -> BaseAgent:
+        with Session(self.globals.sql_orm.engine) as session:
+            agent_meta_list: List[AgentMeta] = session.query(AgentMeta).filter(AgentMeta.id==id).all()
+            if len(agent_meta_list) == 0:
+                logger.error("get_by_id failed")
+                return None
+
+            agent_meta: AgentMeta = agent_meta_list[0]
+            agent: BaseAgent = get_agent(agent_meta=agent_meta, globals=self.globals, io=io)
+
+            logger.debug("get_by_id suc")
+            return agent
+
     def get(self, agent_name: str, sandbox_id: str, io: BaseIo, timestamp_callback: Callable) -> RolePlayAgent:
         with Session(self.globals.sql_orm.engine) as session:
             results: List[AgentMeta] = session.query(AgentMeta).filter(AgentMeta.name == agent_name).\
@@ -124,3 +124,4 @@ class AgentManager():
 
         logger.debug("get_or_create_batch suc, agent cnt:%d" % len(agent_dicts))
         return agent_dicts
+

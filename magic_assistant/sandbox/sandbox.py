@@ -15,10 +15,10 @@ from magic_assistant.db.orm import BASE
 
 class SandboxMeta(BASE):
     __tablename__ = "sandbox"
-    id = Column(String, primary_key=True)
-    name = Column(String)
+    id = Column(String, primary_key=True, nullable=False)
+    name = Column(String, nullable=False)
     user_id = Column(String)
-    sandbox_timestamp = Column(BigInteger)
+    sandbox_timestamp = Column(BigInteger, nullable=False)
 
     def __init__(self):
         self.id = uuid.uuid1().hex

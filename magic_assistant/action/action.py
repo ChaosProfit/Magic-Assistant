@@ -4,7 +4,7 @@ from loguru import logger
 from pydantic import BaseModel
 from caseconverter import pascalcase
 
-from magic_assistant.plugins.base_plugin import BasePlugin
+from magic_assistant.plugin.base_plugin import BasePlugin
 
 class Action(BaseModel):
     plugin_name: str
@@ -29,8 +29,8 @@ class Action(BaseModel):
 
     def get_plugin(self):
         try:
-            plugin_class_name: str = self.plugin_name.capitalize() + "Plugin"
-            plugin_file_name: str = "magic_assistant.plugins." + self.plugin_name.lower() + "_plugin"
+            plugin_class_name: str = self.plugin_name.strip("<").strip(">").capitalize() + "Plugin"
+            plugin_file_name: str = "magic_assistant.plugin." + self.plugin_name.strip("<").strip(">").lower() + "_plugin"
             magic_assistant = __import__(plugin_file_name)
             plugin_python_module = eval(plugin_file_name)
             plugin_class = getattr(plugin_python_module, plugin_class_name)

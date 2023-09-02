@@ -1,7 +1,6 @@
-from pydantic import BaseModel
+from magic_assistant.config.base_config import BaseConfig
 
-
-class PostgreConfig(BaseModel):
+class PostgreConfig(BaseConfig):
     url: str = ""
     host: str = ""
     port: str = ""

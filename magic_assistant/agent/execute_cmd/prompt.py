@@ -35,7 +35,7 @@ prompt_template = '''
 [PERSON INPUT]:
     {person_input}
     
-Based on the above, output an action to satisfy the need of the person. Choose just one of the plugins.
+Based on the above, output an action to satisfy the need of the person. Choose just one of the plugin.
 '''
 
 

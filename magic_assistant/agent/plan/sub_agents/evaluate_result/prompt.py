@@ -18,9 +18,10 @@ prompt_template = '''
     {current_result}    
 
 [OUTPUT FORMAT]
-    <explanation>$EXPLANATION</explanation><result>$RESULT(bool)</result>
-    
+    <result>$RESULT(bool)</result>
+
 Based on the above, evaluate if the current action has complete the current plan item to achieve or get closer to the object. 
+Output True or False in the output format.
 '''
 
 
@@ -35,10 +36,9 @@ def build_prompt(plan_object: str, plan_item: str, action: Action) -> str:
 def decode_llm_output(output: str) -> bool:
     import re
 
-    explanation_match = re.search("<explanation>([\w\W]+)</explanation>", output)
     result_match = re.search("<result>([\w\W]+)</result>", output)
-    if explanation_match is None or result_match is None:
-        logger.error("decode_evaluate_result_output failed, explanation_match:%s, result_match:%s" % (explanation_match, result_match))
+    if result_match is None:
+        logger.error("decode_evaluate_result_output failed, result_match:%s" % (result_match))
         return False
 
     logger.debug("decode_evaluate_result_output suc, result:%s" % result_match.group(1))

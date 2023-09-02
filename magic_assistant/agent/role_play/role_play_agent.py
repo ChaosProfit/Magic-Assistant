@@ -2,7 +2,7 @@ import time
 import uuid
 from typing import Callable, List
 from loguru import logger
-from magic_assistant.memory.memory_item import MemoryItem
+from magic_assistant.memory.memory_item import VectorItem
 from magic_assistant.memory.memory_operator import MemoryOperator
 from magic_assistant.utils.globals import Globals
 from magic_assistant.agent.role_play.prompt import build_communicate_prompt, decode_communicate_output_batch, build_respond_prompt, decode_respond_output
@@ -38,7 +38,7 @@ class RolePlayAgent():
         logger.debug("process")
         return agent_react_list
 
-    def _process(self, observation: MemoryItem, agents_in_context: List[str]) -> List[AgentReact]:
+    def _process(self, observation: VectorItem, agents_in_context: List[str]) -> List[AgentReact]:
         agents_in_context_str = self._list_to_str(agents_in_context)
         react_type = self._decide_next_react_type(observation, agents_in_context_str)
         if react_type == "communicate":
@@ -73,7 +73,7 @@ class RolePlayAgent():
 
         return output_str.rstrip(", ")
 
-    def _decide_next_react_type(self, observation: MemoryItem, agents_in_context_str: str) -> str:
+    def _decide_next_react_type(self, observation: VectorItem, agents_in_context_str: str) -> str:
         from magic_assistant.agent.role_play.prompt import build_decide_next_react_type_prompt, decode_decide_next_react_type_output
         prompt = build_decide_next_react_type_prompt(agent_name=self.meta.name, intro=self.meta.intro,
                                                      summarized_memory=self.memory_operator.get_summarized_memory_str(observation),
@@ -88,7 +88,7 @@ class RolePlayAgent():
         logger.debug("_decide_next_react_type, react_type:%s" % (react_type))
         return react_type
 
-    def _respond(self, observation: MemoryItem) -> List[AgentReact]:
+    def _respond(self, observation: VectorItem) -> List[AgentReact]:
         respond_to_agent = observation.src_entity
         prompt = build_respond_prompt(agent_name=self.meta.name, intro=self.meta.intro,
                                       summarized_memory=self.memory_operator.get_summarized_memory_str(observation),
@@ -103,7 +103,7 @@ class RolePlayAgent():
         logger.debug("_respond suc, agent_react:%s" % (agent_react.__dict__))
         return [agent_react]
 
-    def _communicate(self, observation: MemoryItem, agents_in_context_str: str) -> List[AgentReact]:
+    def _communicate(self, observation: VectorItem, agents_in_context_str: str) -> List[AgentReact]:
         prompt = build_communicate_prompt(agent_name=self.meta.name, intro=self.meta.intro,
                                           summarized_memory=self.memory_operator.get_summarized_memory_str(observation),
                                           observation=observation.content, agents_in_context=agents_in_context_str)

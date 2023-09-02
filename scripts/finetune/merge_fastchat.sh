@@ -1,0 +1,1 @@
+python3 -m fastchat.data.merge --in $1 $2 --out $3

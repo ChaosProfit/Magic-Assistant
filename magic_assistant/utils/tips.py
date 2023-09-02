@@ -43,12 +43,14 @@ class TIPS_EN(Enum):
 
 from pydantic import BaseModel
 class Tips(BaseModel):
-    _languade_code: str
+    languade_code: str = ""
+
     def init(self, languade_code):
-        self._languade_code = languade_code
+        self.languade_code = languade_code
         return 0
+
     def get_tips(self) -> TIPS_BASE:
-        match self._languade_code:
+        match self.languade_code:
             case "en":
                 return TIPS_EN
             case _:

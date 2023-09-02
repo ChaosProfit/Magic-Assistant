@@ -21,15 +21,15 @@ except ImportError:
     )
 
 from magic_assistant.model.llm.base_llm import BaseLlm
-from magic_assistant.model.llm.vicuna.conversation import (
+from magic_assistant.model.llm.transformers_llm.conversation import (
     get_default_conv_template,
     compute_skip_echo_len,
     SeparatorStyle,
 )
-from magic_assistant.model.llm.vicuna.compression import compress_module
+from magic_assistant.model.llm.transformers_llm.compression import compress_module
 
 
-class Vicuna(BaseLlm):
+class TransformersLlm(BaseLlm):
     def __init__(self, model_path: str, load_8bit: bool = True):
         self.model_path: str = model_path
         self.load_8bit: bool = load_8bit
@@ -74,7 +74,7 @@ class Vicuna(BaseLlm):
         if (self._device == "cuda" and self._num_gpus == 1):
             self._model.to(self._device)
 
-        logger.debug("vicuna init suc")
+        logger.debug("transformers_llm init suc")
 
     def run(self, input: str):
         conv = get_default_conv_template(self.model_path).copy()

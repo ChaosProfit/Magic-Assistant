@@ -173,7 +173,7 @@ conv_templates = {
 
 def get_default_conv_template(model_name):
     model_name = model_name.lower()
-    if "vicuna" in model_name or "output" in model_name:
+    if "transformers_llm" in model_name or "output" in model_name:
         return conv_vicuna_v1_1
     return conv_one_shot
 

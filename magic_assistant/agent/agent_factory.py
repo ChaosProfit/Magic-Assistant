@@ -8,6 +8,7 @@ from magic_assistant.agent.role_play.role_play_agent import RolePlayAgent
 from magic_assistant.utils.globals import Globals
 from magic_assistant.io.base_io import BaseIo
 from magic_assistant.agent.base_agent import AgentMeta
+from magic_assistant.agent.knowledge_base.knowledge_base_agent import KnowledgeBaseAgent
 
 def get_agent(agent_meta: AgentMeta, globals: Globals, io: BaseIo) -> BaseAgent:
     agent: BaseAgent = None
@@ -20,6 +21,8 @@ def get_agent(agent_meta: AgentMeta, globals: Globals, io: BaseIo) -> BaseAgent:
         agent = ChatAgent(agent_meta=agent_meta, globals=globals, io=io)
     elif agent_meta.type == "execute_cmd":
         agent = ExecuteCmdAgent(agent_meta=agent_meta, globals=globals, io=io)
+    elif agent_meta.type == "knowledge_base":
+        agent = KnowledgeBaseAgent(agent_meta=None, globals=globals, io=None)
     else:
         logger.error("unsupport agent type: %s" % agent_meta.type)
         return agent

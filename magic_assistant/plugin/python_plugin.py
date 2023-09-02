@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from loguru import logger
-from magic_assistant.plugins.base_plugin import BasePlugin
+from magic_assistant.plugin.base_plugin import BasePlugin
 from io import StringIO
 from contextlib import redirect_stdout
 

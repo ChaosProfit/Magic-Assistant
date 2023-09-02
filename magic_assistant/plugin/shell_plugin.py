@@ -4,7 +4,7 @@ from loguru import logger
 import subprocess
 
 
-from magic_assistant.plugins.base_plugin import BasePlugin
+from magic_assistant.plugin.base_plugin import BasePlugin
 
 
 class ShellPlugin(BasePlugin):

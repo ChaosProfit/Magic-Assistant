@@ -17,21 +17,17 @@ class AGENT_TYPE(Enum):
     ROLE_PLAY = "role_play"
     EXECUTE_CMD = "execute_cmd"
     CHAT = "chat"
-
-    def to_list():
-        ret_list = []
-        for key, value in self.__dict__.items():
-            pass
+    KNOWLEDGE_BASE = "knowledge_base"
 
 class AgentMeta(BASE):
     __tablename__ = "agent"
-    id = Column(String)
-    name = Column(String, primary_key=True)
-    user_id = Column(String, primary_key=True)
+    user_id = Column(String, primary_key=True, nullable=False)
+    name = Column(String, primary_key=True, nullable=False)
+    id = Column(String, nullable=False)
     sandbox_id = Column(String)
     intro = Column(String)
-    type = Column(String)
-    create_timestamp = Column(BigInteger)
+    type = Column(String, nullable=False)
+    create_timestamp = Column(BigInteger, nullable=False)
 
     def __init__(self):
         self.id = uuid.uuid1().hex
@@ -56,7 +52,7 @@ class AgentMeta(BASE):
                 self.__dict__[key] =  value
 
         if self.name == "" or self.type == "":
-            logger.error("from_dict failed, lack basic info")
+            logger.error("from_dict failed, lack basic info, dict:%s" % input_dict)
             return -1
 
         if self.type not in [item.value for item in AGENT_TYPE]:
@@ -88,15 +84,15 @@ class BaseAgent():
     def init(self):
         raise NotImplementedError("Should be implemented")
 
-    async def run(self):
+    def run(self):
         raise NotImplementedError("Should be implemented")
 
     def process(self, person_input: str):
         raise NotImplementedError("Should be implemented")
 
-    async def output_intermediate_steps(self, output: str):
+    def output_intermediate_steps(self, output: str):
         if self.agent_config.output_intermediate_steps:
-            await self.io.output(output)
+            self.io.output(output)
 
 
 if __name__ == "__main__":

@@ -27,22 +27,22 @@ class PlanAgent(BaseAgent):
         logger.debug("init suc")
         return 0
 
-    async def run(self) -> int:
-        plan: Plan = await self.make_plan_agent.run()
+    def run(self) -> int:
+        plan: Plan = self.make_plan_agent.run()
 
         while True:
             if self.current_loop_count > self.agent_config.max_loop_count:
-                await self.io.output(self.globals.tips.get_tips().REACH_LOOP_COUNT.value)
+                self.io.output(self.globals.tips.get_tips().REACH_LOOP_COUNT.value)
                 logger.error("current_loop_count %d have achieved the max_loop_count:%d" %
                              (self.current_loop_count, self.agent_config.max_loop_count))
                 return -1
 
             plan_item = plan.get_an_executable_item()
-            action: Action = await self.execute_action_agent.run(plan.user_object, plan_item)
-            await self.evaluate_result_agent.run(plan.user_object, plan_item, action, plan)
+            action: Action = self.execute_action_agent.run(plan.user_object, plan_item)
+            self.evaluate_result_agent.run(plan.user_object, plan_item, action, plan)
 
             if plan.is_completed():
-                await self.io.output("%s:\n%s" % (self.globals.tips.get_tips().THE_FINAL_RESULT_IS.value, action.result))
+                self.io.output("%s:\n%s" % (self.globals.tips.get_tips().THE_FINAL_RESULT_IS.value, action.result))
                 logger.debug("achieved the user object")
                 break
 

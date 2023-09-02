@@ -2,8 +2,8 @@ from enum import Enum
 from pydantic import BaseModel
 from typing import List
 from typing import Dict
-from magic_assistant.vector.vector import Vector
-from magic_assistant.memory.memory_item import MemoryItem
+from magic_assistant.vector.orm_vector import Vector
+from magic_assistant.memory.memory_item import VectorItem
 
 
 class OPERATOR_TYPE(Enum):
@@ -56,10 +56,10 @@ class BaseVectorDb:
     def init(self):
         raise NotImplementedError("Should be implemented")
 
-    def add_mmeory(self, memory: MemoryItem):
+    def add_mmeory(self, memory: VectorItem):
         raise NotImplementedError("Should be implemented")
 
-    def search_memory(self, input_vector: list=[], filter_paras: List[FilterPara]=[], order_para: OrderPara=None, limit: int=5) -> List[MemoryItem]:
+    def search_memory(self, input_vector: list=[], filter_paras: List[FilterPara]=[], order_para: OrderPara=None, limit: int=5) -> List[VectorItem]:
         raise NotImplementedError("Should be implemented")
 
     def filter_para_to_sql(self, filter_paras: list[FilterPara]) -> str:
@@ -74,3 +74,19 @@ class BaseVectorDb:
 
         output_str = output_str.rstrip(" AND")
         return output_str
+
+    def delete_vector(self, bucket_name: str, data_id: str) -> int:
+        raise NotImplementedError("Should be implemented")
+
+    def search_vector(self, input_vector: list = [], filter_paras: List[FilterPara] = [], order_para: OrderPara = None,
+                      limit: int = 5):
+        raise NotImplementedError("Should be implemented")
+
+    def add_finetune_data(self, hash: str):
+        raise NotImplementedError("Should be implemented")
+
+    def get_finetune_data(self, hash: str):
+        raise NotImplementedError("Should be implemented")
+
+    def search_finetune_data(self, input_vector: List[float]):
+        raise NotImplementedError("Should be implemented")

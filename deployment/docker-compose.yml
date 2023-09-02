@@ -26,6 +26,21 @@ services:
       - "5433:5432"
     restart: ${RESTART_POLICY}
 
+  minio:
+    image: quay.io/minio/minio:RELEASE.2023-01-12T02-06-16Z
+    container_name: minio
+    command: server --console-address ":9001" /data}
+    restart: ${RESTART_POLICY}
+    volumes:
+      - ${ROOT_DATA_DIR_PATH}/minio/data:/data
+      - ./minio/config_files:/root/.minio
+    ports:
+      - "${MINIO_PORT}:9000"
+      - "${MINIO_CONSOLE_PORT}:9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD}
+
   magic-assistant:
     container_name: magic-assistant
     image: mojingsmart/magic-assistant:${MAGIC_ASSISTANT_VERSION}

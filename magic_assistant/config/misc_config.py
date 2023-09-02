@@ -1,6 +1,5 @@
-from pydantic import BaseModel
+from magic_assistant.config.base_config import BaseConfig
 
-
-class MiscConfig(BaseModel):
+class MiscConfig(BaseConfig):
     language_code: str = ""
 

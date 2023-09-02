@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import asyncio
 import json
 from typing import List
 from loguru import logger
@@ -12,6 +13,7 @@ from magic_assistant.utils.globals import Globals
 from magic_assistant.io.shell_io import ShellIo
 from magic_assistant.agent.agent_manager import AgentManager
 from magic_assistant.utils.globals import GLOBALS
+from magic_assistant.utils.utils import syn_execute_asyn_func
 
 AGENT_MANAGER = AgentManager(globals=GLOBALS)
 
@@ -61,23 +63,22 @@ class Cli():
             for agent_meta in agent_meta_list:
                 self._console.print(agent_meta.to_dict())
 
-    def run(self, agent_type: str, config_path: str) -> int:
-        if agent_type == "role_play":
+    def run(self, agent_meta: AgentMeta, config_path: str="") -> int:
+        if agent_meta.type == "role_play":
             return self._start_role_play_agent(config_path)
         else:
-            return self._start_common_agent(agent_type)
+            return self._start_common_agent(agent_meta)
 
-    def _start_common_agent(self, agent_type: str) -> int:
+    def _start_common_agent(self, agent_meta: AgentMeta) -> int:
         self.io.output(self.globals.tips.get_tips().WELCOME.value)
 
-        agent: BaseAgent = get_agent(agent_type=agent_type, globals=self.globals, io=self.io)
+        agent: BaseAgent = get_agent(agent_meta=agent_meta, globals=self.globals, io=self.io)
         if agent is None:
             logger.error("start_agend failed")
             return -1
 
         agent.init()
         agent.run()
-
         return 0
 
     def _start_role_play_agent(self, config_path: str) -> int:

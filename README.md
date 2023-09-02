@@ -16,7 +16,7 @@ your defined sandbox. This agent type is inspired by "Generative Agents: Interac
 (https://arxiv.org/abs/2304.03442).
 
 # Environment
-I have test Magic-Assistant in ubuntu22.04, rtx4090, cuda-11.7 and pytorch2.0.1. Ubuntu20.04+ should work. GPUS which hava 
+We have test Magic-Assistant in ubuntu22.04, rtx4090, cuda-11.7 and pytorch2.0.1. Ubuntu20.04+ should work. GPUS which hava 
 more than 24+GB memory should work. 
 
 If you encounter problems when you use Magic-Assistant in other environments, you can connect me.
@@ -36,20 +36,20 @@ The mojingsmart/magic-assistant:latest docker image has already installed the py
 You can connect with it by http and websocket clients.
 
 If you decide to use Magic-Assistant in docker, you should execute the following shell cmds to install nvidia dependencies
-and configure the system:
-1, sudo apt-get update
-2, sudo apt-get install -y nvidia-container-toolkit
-3, sudo nvidia-ctk runtime configure --runtime=docker
-4, sudo systemctl restart docker
-5, sudo reboot
+and configure the system:<br />
+1, sudo apt-get update;<br />
+2, sudo apt-get install -y nvidia-container-toolkit;<br />
+3, sudo nvidia-ctk runtime configure --runtime=docker;<br />
+4, sudo systemctl restart docker;<br />
+5, sudo reboot.<br />
 
 You can start the magic-assistant docker in the following methods:
-1, cd $Magic-Assistant
-2, docker compose -f deployment/docker-compose.yml up -d magic-assistant
+1, cd $Magic-Assistant;<br />
+2, docker compose -f deployment/docker-compose.yml up -d magic-assistant.<br />
 
 ## compile source
-1, Setup your own python environment, require python3.10+. For example, execute "conda create -n mojing python=3.10" in shell;
-2, Install python packages. In shell, cd to the directory of Magic-Assistant and execute " pip3 install -e .".
+1, Setup your own python environment, require python3.10+. For example, execute "conda create -n mojing python=3.10" in shell;<br />
+2, Install python packages. In shell, cd to the directory of Magic-Assistant and execute " pip3 install -e .".<br />
 
 # client
 Magic-Assistant supports two types of client: cli and restful_api. If you want to use or test Magic-Assistant in shell, choose the
@@ -61,3 +61,17 @@ to start an agent.
 ## restful api
 Execute "python3 -m magic_assistant.main --io_type restful_api --agent run" to start magic_assistant in restful_api mode. You can use
 http or websocket to communicate with magic_assistant. 
+
+# llm
+## mojing-llm
+### data
+We have collect and clean data from the following datasets: alpaca-gpt4-data-zh, alpaca-data-gpt4-chinese and Open-Platypus.<br />
+The data is stored in https://huggingface.co/datasets/Guanglong/mojing-llm.<br />
+### model
+We have also fine-tuned llama2 on this dataset. We have released two types of llm in huggingface:
+7B(https://huggingface.co/Guanglong/mojing-llm-7b) and 13B(https://huggingface.co/Guanglong/mojing-llm-13b). <br />
+The 7B and 13B llm can run on consumer-grade GPUS like RTX4090, RTX3090 and so on.
+## llm api 
+We will import the api of openai and other llm providers(like baidu) soon. Users could use these apis without self-hosted gpus.
+## others llm
+Most llama/llama2 series llm(like vicuna like platypus2) can be used.

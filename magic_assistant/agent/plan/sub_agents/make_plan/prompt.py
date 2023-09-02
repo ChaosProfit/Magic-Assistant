@@ -1,7 +1,7 @@
 from loguru import logger
 
 from magic_assistant.agent.plan.plan import Plan
-from magic_assistant.plugins.provided_plugins import PROVIDED_PLUGINS
+from magic_assistant.plugin.provided_plugins import PROVIDED_PLUGINS
 
 prompt_template = '''
 

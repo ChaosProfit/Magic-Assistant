@@ -68,7 +68,7 @@ do_something_prompt_template = \
 '''
 {role_play_common_prompt}
 
-What type of action will {agent_name} do next? Supported plugins are: {supported_plugins}.
+What type of action will {agent_name} do next? Supported plugin are: {supported_plugins}.
 Output in the following format:
 <Plugin>$PLUGIN</Plugin>
 <Action>$ACTION</Action>
